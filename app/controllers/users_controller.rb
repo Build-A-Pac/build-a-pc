@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     if @user
 
       render json: { user: @user.as_json(only: [:id, :email, :access_token,
-                                                :full_name, :admin
+                                                :full_name, :admin,
                                                 :username]) },
         status: :ok
     else
