@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+  root to: 'users#index'
+
+  get '/users', to: 'users#index'
+
+  post '/users/register', to: 'users#register'
+
+  post 'users/login', to: 'users#login'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
