@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  cpu_weight: 1
+  gpu_weight: 1
+  psu_weight: 1
+  ram_weight: 1
+  storage_weight: 1
+
+two:
+  name: MyString
+  cpu_weight: 1
+  gpu_weight: 1
+  psu_weight: 1
+  ram_weight: 1
+  storage_weight: 1
