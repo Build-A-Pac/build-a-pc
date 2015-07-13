@@ -7,6 +7,15 @@ Rails.application.routes.draw do
   post '/users/register', to: 'users#register'
 
   post 'users/login', to: 'users#login'
+
+  get 'parts/cpu', to: 'parts#cpu'
+  get 'parts/ram', to: 'parts#ram'
+  get 'parts/motherboard', to: 'parts#motherboard'
+  get 'parts/psu', to: 'parts#psu'
+  get 'parts/gpu', to: 'parts#gpu'
+  get 'parts/hard_drive', to: 'parts#hard_drive'
+  get 'parts/solid_state', to: 'parts#solid_state'
+  get 'parts/computer_case', to: 'parts#computer_case'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
