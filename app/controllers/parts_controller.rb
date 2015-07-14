@@ -4,6 +4,18 @@ class PartsController < ApplicationController
     @best = BestBuy.new
   end
 
+  def save_part
+    @part = Part.new(name: params[:sku], make: params[:manufacturer],
+                     model: params[:name], category: params[:categoryPath],
+                     cost: params[:salePrice], store_url: params[:url])
+    if @part.save
+      render json: { part: @part.asjson }
+    else
+      render json: { errors: @images.errors.full_message },
+      status: :not_found
+    end
+  end
+
   def cpu
     result = @best.populate_list('abcat0507010')
     render json: result
@@ -44,3 +56,7 @@ class PartsController < ApplicationController
     render json: result
   end
 end
+
+
+
+# http://api.remix.bestbuy.com/v1/products(sku=#{sku})?format=json&show=name,salePrice&apiKey=#{ENV['BEST_BUY_API_KEY']}
