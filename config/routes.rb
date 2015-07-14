@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get 'parts/hard_drive', to: 'parts#hard_drive'
   get 'parts/solid_state', to: 'parts#solid_state'
   get 'parts/computer_case', to: 'parts#computer_case'
+
+  post 'parts/save_part', to: 'parts#save_part'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
