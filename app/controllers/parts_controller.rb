@@ -18,7 +18,7 @@ class PartsController < ApplicationController
 
   def cpu
     result = @best.populate_list('abcat0507010')
-    render json: result
+    render json: result.as_json
   end
 
   def ram
