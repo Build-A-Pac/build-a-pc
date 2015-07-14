@@ -7,5 +7,6 @@ class ComputersController < ApplicationController
     else
       render json: { errors: @images.errors.full_message },
       status: :not_found
+    end
   end
 end
