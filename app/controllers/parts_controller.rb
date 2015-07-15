@@ -33,7 +33,7 @@ class PartsController < ApplicationController
   end
 
   def gpu
-    result = BEST_BUY.populate_list('abcat0507009')
+    result = BEST_BUY.populate_list('abcat0507002')
     render json: result
   end
 
