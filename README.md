@@ -108,4 +108,35 @@ Reference this API documention as necessary.  It details all available endpoints
 	* manufacturer
 	* name
 	* salePrice
-	*  	
+	* url
+	* sku
+	* categoryPath
+* CPU
+	* Processor Cores
+	* Processor Speed
+	* Processor Socket
+* GPU
+	* GPU Clock Speed
+	* Video Memory Capacity 
+* RAM
+	* Type of Memory (RAM)
+	* Storage Capacity
+* Motherboard
+	* Number Of Memory Slots
+	* Processor Compatibility
+	* Maximum Memory Supported
+	* Processor Socket
+	* Form Factor
+* PSU
+	* Wattage
+* Hard_drive
+	* Hard Drive Capacity
+	* Internal Or External
+	* Maximum Data Transfer Rate
+* Solid_State
+	* Hard Drive Capacity
+	* Internal Or External
+* Computer_Case
+	* Case Typer
+	* Power Supply
+	
