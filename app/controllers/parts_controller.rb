@@ -12,6 +12,10 @@ class PartsController < ApplicationController
     end
   end
 
+  Part.find_or_create_by(name: params["sku"], make: params["manufacturer"],
+                   model: params["name"], category: params["categoryPath"],
+                   cost: params["salePrice"], store_url: params["url"])
+
   # def computer
   #   @computer = Computer.new(computer_name: params[:computer_name])
   #

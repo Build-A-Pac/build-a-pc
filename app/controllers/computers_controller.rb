@@ -6,7 +6,7 @@ class ComputersController < ApplicationController
       render json: { computer: @computer.as_json }
     else
       render json: { errors: @images.errors.full_message },
-      status: :not_found
+        status: :not_found
     end
   end
 
