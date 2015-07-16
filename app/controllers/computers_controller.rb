@@ -9,4 +9,14 @@ class ComputersController < ApplicationController
       status: :not_found
     end
   end
+
+  def update_computer
+    computer = Computer.new
+    @computer = computer.create
+
+    part = Part.new
+    @part = part.save_part
+
+    @computer_part = ComputerPart.new(part_id: @part.id, computer_id: @computer.id)
+  end
 end

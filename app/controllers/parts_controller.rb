@@ -4,13 +4,25 @@ class PartsController < ApplicationController
     @part = Part.new(name: params["sku"], make: params["manufacturer"],
                      model: params["name"], category: params["categoryPath"],
                      cost: params["salePrice"], store_url: params["url"])
-    if @part.save
+    if Part.find_or_create_by(name: @part.name)
       render json: { part: @part.asjson }
     else
       render json: { errors: @part.errors.full_message },
       status: :not_found
     end
   end
+
+  # def computer
+  #   @computer = Computer.new(computer_name: params[:computer_name])
+  #
+  #   if @computer.save
+  #     @completed_computer = ComputerPart.create(computer_id: @computer.id, part_id: @part.id)
+  #     render json: { computer: @completed_computer.as_json }
+  #   else
+  #     render json: { errors: @completed_computer.errors.full_message }
+  #
+  # end
+
 
   def cpu
     result = BEST_BUY.populate_list('abcat0507010')

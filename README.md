@@ -94,12 +94,12 @@ Reference this API documention as necessary.  It details all available endpoints
 	"url": "http://www.bestbuy.com/site/amd-a10-7700k-3-4ghz-processor-black/1865059.p?id=1219517899254&skuId=1865059"
 	}
 ]
-	
+
 ```
- 
- 
+
+
 ##Available Parts Calls
-  
+
 * cpu, ram, motherboard, psu, gpu, hard_drive, solid_state, and computer_case
 
 #Categories for Parts
@@ -117,7 +117,7 @@ Reference this API documention as necessary.  It details all available endpoints
 	* Processor Socket
 * GPU
 	* GPU Clock Speed
-	* Video Memory Capacity 
+	* Video Memory Capacity
 * RAM
 	* Type of Memory (RAM)
 	* Storage Capacity
@@ -139,4 +139,3 @@ Reference this API documention as necessary.  It details all available endpoints
 * Computer_Case
 	* Case Typer
 	* Power Supply
-	
