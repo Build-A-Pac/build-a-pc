@@ -25,37 +25,58 @@ class BestBuy
 
   def get_rams
     json = self.populate_list('abcat0506000')
-    json.merge({ sortable_keys: ["Type of Memory (RAM)", "Storage Capacity"]})
+    {
+      sortable_keys: ["Type of Memory (RAM)", "Storage Capacity"],
+      parts: json
+    }
   end
 
   def get_gpus
     json = self.populate_list('abcat0507002')
-    json.merge({ sortable_keys: ["GPU Clock Speed", "Video Memory Capacity"]})
+    {
+      sortable_keys: ["GPU Clock Speed", "Video Memory Capacity"],
+      parts: json
+    }
   end
 
   def get_motherboards
     json = self.populate_list('abcat0507008')
-    json.merge({ sortable_keys: ["Number Of Memory Slots", "Processor Compatibility", "Maximum Memory Supported", "Processor Socket", "Form Factor"]})
+    {
+      sortable_keys: ["Number Of Memory Slots", "Processor Compatibility", "Maximum Memory Supported", "Processor Socket", "Form Factor"],
+      parts: json
+    }
   end
 
   def get_psus
     json = self.populate_list('abcat0507009')
-    json.merge({ sortable_keys: ["Wattage"]})
+    {
+      sortable_keys: ["Wattage"],
+      parts: json
+    }
   end
 
   def get_hard_drives
     json = self.populate_list('pcmcat270900050001')
-    json.merge({ sortable_keys: ["Hard Drive Capacity", "Internal Or External", "Maximum Data Transfer Rate"]})
+    {
+      sortable_keys: ["Hard Drive Capacity", "Internal Or External", "Maximum Data Transfer Rate"],
+      parts: json
+    }
   end
 
   def get_solid_states
     json = self.populate_list('pcmcat201300050005')
-    json.merge({ sortable_keys: ["Hard Drive Capacity", "Internal Or External"]})
+    {
+      sortable_keys: ["Hard Drive Capacity", "Internal Or External"],
+      parts: json
+    }
   end
 
   def get_computer_cases
     json = self.populate_list('abcat0507006')
-    json.merge({ sortable_keys: ["Case Type", "Power Supply"]})
+    {
+      sortable_keys: ["Case Type", "Power Supply"],
+      parts: json
+    }
   end
 
   def get_part(sku)
