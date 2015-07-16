@@ -139,3 +139,9 @@ Reference this API documention as necessary.  It details all available endpoints
 * Computer_Case
 	* Case Typer
 	* Power Supply
+
+##Computer
+* Path: `POST '/computer/create'`
+* Params:
+	* computer_name
+	* parts

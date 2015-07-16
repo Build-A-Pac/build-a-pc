@@ -2,11 +2,16 @@ class ComputersController < ApplicationController
   def create
     @computer = Computer.new(computer_name: params[:computer_name])
 
-    if @computer.save
-      render json: { computer: @computer.as_json }
-    else
-      render json: { errors: @images.errors.full_message },
-        status: :not_found
+    @part_maodels = params[:parts].map do |part|
+      p = Part.find_by(sku: params[:parts].name)
+      if p
+        render json: { part: p.as_json }
+      else
+        @thing = Part.create(name: params["sku"], make: params["manufacturer"],
+                         model: params["name"], category: params["categoryPath"],
+                         cost: params["salePrice"], store_url: params["url"])
+        render json: { part: @thing.as_json }
+      end
     end
   end
 
