@@ -1,22 +1,31 @@
 class ComputersController < ApplicationController
-  def create
-    @computer = Computer.new(computer_name: params[:computer_name])
-
-    @part_maodels = params['parts'].map do |part|
-      p = part.find_by(name: params['parts']['sku'])
-      if p
-        render json: { computer: @computer.as_json, parts: p.as_json }
-      end
-    end
+  def index
   end
 
-  # def update_computer
-  #   computer = Computer.new
-  #   @computer = computer.create
-  #
-  #   part = Part.new
-  #   @part = part.save_part
-  #
-  #   @computer_part = ComputerPart.new(part_id: @part.id, computer_id: @computer.id)
-  # end
+  def create
+    @computer = Computer.create(computer_name: params[:computer_name])
+
+    @part_maodels = params['parts'].map do |part|
+      p = Part.find_by(name: part['name'])
+      if p
+        p
+      else
+        Part.create(name: part["sku"], model: part["name"], make: part["manufacturer"],
+                    category: part["categoryPath"], cost: part["salePrice"], store_url: part['url'],
+                    details: part["details"])
+      end
+    end
+
+    @computer.parts = @part_maodels
+    render json: { computer: @computer.as_json, parts: @computer.parts.as_json }
+  end
+
+  def show
+    @computer = Computer.find(params[:id])
+    render json: { computer: @computer.as_json, parts: @computer.parts.as_json }
+  end
 end
+
+
+
+# name: part["name"], model: part["model"]
