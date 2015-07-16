@@ -6,16 +6,17 @@ class ComputersController < ApplicationController
       p = part.find_by(name: params['parts']['sku'])
       if p
         render json: { computer: @computer.as_json, parts: p.as_json }
+      end
     end
   end
 
-  def update_computer
-    computer = Computer.new
-    @computer = computer.create
-
-    part = Part.new
-    @part = part.save_part
-
-    @computer_part = ComputerPart.new(part_id: @part.id, computer_id: @computer.id)
-  end
+  # def update_computer
+  #   computer = Computer.new
+  #   @computer = computer.create
+  #
+  #   part = Part.new
+  #   @part = part.save_part
+  #
+  #   @computer_part = ComputerPart.new(part_id: @part.id, computer_id: @computer.id)
+  # end
 end
