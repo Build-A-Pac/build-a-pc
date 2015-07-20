@@ -11,7 +11,7 @@ class ComputersController < ApplicationController
         p
       else
         Part.create(name: part["sku"], model: part["name"], make: part["manufacturer"],
-                    category: part["categoryPath"], cost: part["salePrice"], store_url: part['url'],
+                    category: part["categoryPath"], cost: part["salePrice"], store_url: part["url"],
                     details: part["details"])
       end
     end
@@ -24,6 +24,20 @@ class ComputersController < ApplicationController
     @computer = Computer.find(params[:id])
     render json: { computer: @computer.as_json, parts: @computer.parts.as_json }
   end
+
+  def build_computer
+    @best = BestBuy.new
+    @cpu =           @best.pick_cpu(params[:max_price])
+    @mobo =          @best.pick_motherboard(params[:max_price])
+    @ram =           @best.pick_ram(params[:max_price])
+    @storage =       @best.pick_storage(params[:max_price])
+    @gpu =           @best.pick_gpu(params[:max_price])
+    @computer_case = @best.pick_computer_case(params[:max_price])
+    @psu =           @best.pick_psu(params[:max_price])
+
+    render json: { parts: [cpu: @cpu.as_json, motherboard: @mobo.as_json, ram: @ram.as_json, storage: @storage.as_json, gpu: @gpu.as_json, computer_case: @computer_case.as_json, psu: @psu.as_json] }
+  end
+
 end
 
 
