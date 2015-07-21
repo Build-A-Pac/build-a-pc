@@ -16,47 +16,140 @@ class BestBuy
   end
 
   def pick_cpu(max_price)
-    cpu_price = (25.to_f/100) * max_price.to_i
-    @cpus = self.get_cpus[:parts].select { |cpu| cpu["salePrice"] <= cpu_price }.sort_by {|price| price["salePrice"] }.last
+    weight = 25
+    cpu_price = (weight.to_f/100) * max_price.to_i
+    @cpus = Part.where(category: 'abcat0507010').select { |cpu| cpu[:cost] <= cpu_price }.sort_by {|price| price[:cost] }
+    if @cpus.empty?
+      weight += 3
+      cpu_price = (weight.to_f/100) * max_price.to_i
+      @cpus = Part.where(category: 'abcat0507010').select { |cpu| cpu[:cost] <= cpu_price }.sort_by {|price| price[:cost] }
+    end
+    @cpus.last
   end
 
   def pick_ram(max_price)
-    ram_price = (5.to_f/100) * max_price.to_i
-    rams = self.get_rams[:parts].select { |ram| ram["salePrice"] <= ram_price }.sort_by {|price| price["salePrice"] }.last
+    weight = 5
+    ram_price = (weight.to_f/100) * max_price.to_i
+    @rams = Part.where(category: 'abcat0506000').select { |ram| ram[:cost] <= ram_price }.sort_by {|price| price[:cost] }
+    if @rams.empty?
+      weight += 3
+      ram_price = (weight.to_f/100) * max_price.to_i
+      @rams = Part.where(category: 'abcat0506000').select { |ram| ram[:cost] <= ram_price }.sort_by {|price| price[:cost] }
+    end
+    @rams.last
   end
 
-  def pick_motherboard(max_price, socket)
-    motherbaord_price = (14.to_f/100) * max_price.to_i
-    @motherboards = self.get_motherboards[:parts].select { |mobo| mobo["salePrice"] <= motherbaord_price }.sort_by { |price| price["salePrice"] }
-    details = @motherboards.last["details"]
-    details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
+  # def pick_motherboard(max_price, socket, build_type)
+  #   price_limit = build_type.mobo_percent * max_price
+  #   motherboards = Part.where("category = ? AND cost <= ?", foo, price_limit)
+  #   valid_mobos = motherboards.select {|x| x.details["Processor Socket"].include?(socket) }
+  #   if valid_mobos.empty?
+  #     # If none, what do we do?
+  #     puts "oh shit"
+  #   else
+  #     motherboards.last
+  #   end
+  # end
 
-    until details['Processor Socket'].include?(socket)
+  def pick_motherboard2(max_price, socket)
+    num = 14
+    motherbaord_price = (num.to_f/100) * max_price.to_i
+    @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
+    until !@motherboards.empty?
+      num += 3
+      motherbaord_price = (num.to_f/100) * max_price.to_i
+      @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
+    end
+      details = @motherboards.last[:details]
+      details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
+
+    until details['Processor Socket'] && (details['Processor Socket'].include?(socket) || socket.include?(details["Processor Socket"]))
       @motherboards.pop
-      details = @motherboards.last['details']
+      if @motherboards.empty?
+        num += 3
+        motherbaord_price = (num.to_f/100) * max_price.to_i
+        @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
+      end
+      details = @motherboards.last[:details]
       details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
     end
     @motherboards.last
   end
 
+
+  def pick_motherboard(max_price, socket)
+    num = 14
+    motherbaord_price = (num.to_f/100) * max_price.to_i
+    @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
+    if @motherboards.empty?
+      weight += 3
+      _price = (weight.to_f/100) * max_price.to_i
+      @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
+    end
+    details = @motherboards.last[:details]
+    details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
+    until !@motherboards.empty? && details['Processor Socket'] && (details['Processor Socket'].include?(socket) || socket.include?(details["Processor Socket"]))
+      num += 3
+      motherbaord_price = (num.to_f/100) * max_price.to_i
+      @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
+      details = @motherboards.last[:details]
+      details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
+    end
+    @motherboards.last
+  end
+
+  #give cheapest motherboard
+  #find motherboards that are 14% of totalprice
+  #if empty, increase % by 3
+  #find detail that matches socket
+  #
+
   def pick_storage(max_price)
-    storage_price = (8.to_f/100) * max_price.to_i
-    storage = self.get_solid_states[:parts].select { |storage| storage["salePrice"] <= storage_price }.sort_by {|price| price["salePrice"] }.last
+    weight = 8
+    storage_price = (weight.to_f/100) * max_price.to_i
+    @storage = Part.where(category: 'pcmcat201300050005').select { |storage| storage[:cost] <= storage_price }.sort_by {|price| price[:cost] }
+    if @storage.empty?
+      weight += 3
+      storage_price = (weight.to_f/100) * max_price.to_i
+      @storage = Part.where(category: 'pcmcat201300050005').select { |storage| storage[:cost] <= storage_price }.sort_by {|price| price[:cost] }
+    end
+    @storage.last
   end
 
   def pick_gpu(max_price)
-    gpu_price = (34.to_f/100) * max_price.to_i
-    gpus = self.get_gpus[:parts].select { |gpu| gpu["salePrice"] <= gpu_price }.sort_by {|price| price["salePrice"] }.last
+    weight = 34
+    gpu_price = (weight.to_f/100) * max_price.to_i
+    @gpus = Part.where(category: 'abcat0507002').select { |gpu| gpu[:cost] <= gpu_price }.sort_by {|price| price[:cost] }
+    if @gpus.empty?
+      weight += 3
+      gpu_price = (weight.to_f/100) * max_price.to_i
+      @gpus = Part.where(category: 'abcat0507002').select { |gpu| gpu[:cost] <= gpu_price }.sort_by {|price| price[:cost] }
+    end
+    @gpus.last
   end
 
   def pick_computer_case(max_price)
-    case_price = (8.to_f/100) * max_price.to_i
-    casess = self.get_computer_cases[:parts].select { |cases| cases["salePrice"] <= case_price }.sort_by {|price| price["salePrice"] }.last
+    weight = 8
+    case_price = (weight.to_f/100) * max_price.to_i
+    @casess = Part.where(category: 'abcat0507006').select { |cases| cases[:cost] <= case_price }.sort_by {|price| price[:cost] }
+    if @casess.empty?
+      weight += 3
+      case_price = (weight.to_f/100) * max_price.to_i
+      @casess = Part.where(category: 'abcat0507006').select { |cases| cases[:cost] <= case_price }.sort_by {|price| price[:cost] }
+    end
+    @casess.last
   end
 
   def pick_psu(max_price)
-    psu_price = (6.to_f/100) * max_price.to_i
-    psus = self.get_psus[:parts].select { |psu| psu["salePrice"] <= psu_price }.sort_by {|price| price["salePrice"] }.last
+    weight = 6
+    psu_price = (weight.to_f/100) * max_price.to_i
+    @psus = Part.where(category: 'abcat0507009').select { |psu| psu[:cost] <= psu_price }.sort_by {|price| price[:cost] }
+    if @psus.empty?
+      weight += 3
+      psu_price = (weight.to_f/100) * max_price.to_i
+      @psus = Part.where(category: 'abcat0507009').select { |psu| psu[:cost] <= psu_price }.sort_by {|price| price[:cost] }
+    end
+    @psus.last
   end
 
   def get_cpus
