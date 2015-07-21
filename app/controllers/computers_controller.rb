@@ -28,11 +28,14 @@ class ComputersController < ApplicationController
   def build_computer
     @best = BestBuy.new
     @cpu =           @best.pick_cpu(params[:max_price])
-    @mobo =          @best.pick_motherboard(params[:max_price])
+    @mobo =          @best.pick_motherboard(params[:max_price], @cpu['details']['Processor Socket'])
+    sleep 1
     @ram =           @best.pick_ram(params[:max_price])
     @storage =       @best.pick_storage(params[:max_price])
+    sleep 1
     @gpu =           @best.pick_gpu(params[:max_price])
     @computer_case = @best.pick_computer_case(params[:max_price])
+    sleep 1
     @psu =           @best.pick_psu(params[:max_price])
 
     render json: { parts: [cpu: @cpu.as_json, motherboard: @mobo.as_json, ram: @ram.as_json, storage: @storage.as_json, gpu: @gpu.as_json, computer_case: @computer_case.as_json, psu: @psu.as_json] }

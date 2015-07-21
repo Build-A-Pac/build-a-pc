@@ -25,11 +25,16 @@ class BestBuy
     rams = self.get_rams[:parts].select { |ram| ram["salePrice"] <= ram_price }.sort_by {|price| price["salePrice"] }.last
   end
 
-  def pick_motherboard(max_price)
+  def pick_motherboard(max_price, socket)
     motherbaord_price = (14.to_f/100) * max_price.to_i
     @motherboards = self.get_motherboards[:parts].select { |mobo| mobo["salePrice"] <= motherbaord_price }.sort_by { |price| price["salePrice"] }
-    until @motherboards.last["details"]["Processor Socket"].include?(@cpus["details"]["Processor Socket"])
+    details = @motherboards.last["details"]
+    details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
+
+    until details['Processor Socket'].include?(socket)
       @motherboards.pop
+      details = @motherboards.last['details']
+      details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
     end
     @motherboards.last
   end
