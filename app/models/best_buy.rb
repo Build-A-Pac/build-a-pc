@@ -69,25 +69,28 @@ class BestBuy
 
   def get_rams
     json = self.populate_list('abcat0506000')
+    json2 = json.map {|x| x.merge("categoryPath" => "abcat0506000")}
     {
       sortable_keys: ["Type of Memory (RAM)", "Storage Capacity"],
-      parts: json
+      parts: json2
     }
   end
 
   def get_gpus
     json = self.populate_list('abcat0507002')
+    json2 = json.map {|x| x.merge("categoryPath" => "abcat0507002")}
     {
       sortable_keys: ["GPU Clock Speed", "Video Memory Capacity"],
-      parts: json
+      parts: json2
     }
   end
 
   def get_motherboards
     json = self.populate_list('abcat0507008')
+    json2 = json.map {|x| x.merge("categoryPath" => "abcat0507008")}
     {
       sortable_keys: ["Number Of Memory Slots", "Processor Compatibility", "Maximum Memory Supported", "Processor Socket", "Form Factor"],
-      parts: json
+      parts: json2
     }
   end
 
