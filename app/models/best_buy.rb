@@ -78,8 +78,8 @@ class BestBuy
 
 
   def pick_motherboard(max_price, socket)
-    num = 14
-    motherbaord_price = (num.to_f/100) * max_price.to_i
+    weight = 16
+    motherbaord_price = (weight.to_f/100) * max_price.to_i
     @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
     if @motherboards.empty?
       weight += 3
@@ -89,8 +89,8 @@ class BestBuy
     details = @motherboards.last[:details]
     details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
     until !@motherboards.empty? && details['Processor Socket'] && (details['Processor Socket'].include?(socket) || socket.include?(details["Processor Socket"]))
-      num += 3
-      motherbaord_price = (num.to_f/100) * max_price.to_i
+      weight += 3
+      motherbaord_price = (weight.to_f/100) * max_price.to_i
       @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
       details = @motherboards.last[:details]
       details["Processor Socket"] = details.delete("CPU Socket Support") if details["CPU Socket Support"].present?
