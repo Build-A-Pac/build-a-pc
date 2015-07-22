@@ -38,7 +38,7 @@ class ComputersController < ApplicationController
     @big_number = @cpu[:cost] + @mobo[:cost] + @ram[:cost] + @storage[:cost] + @gpu[:cost] + @computer_case[:cost] + @psu[:cost]
 
 
-    render json: { total_price: @big_number.round(2).as_json, parts: [@cpu.as_json, @mobo.as_json, @ram.as_json, @storage.as_json, @gpu.as_json, @computer_case.as_json, @psu.as_json] }
+    render json: { total_price: @big_number.round(2).as_json, parts: [cpu: @cpu.as_json, motherboard: @mobo.as_json, ram: @ram.as_json, storage: @storage.as_json, gpu: @gpu.as_json, computer_case: @computer_case.as_json, psu: @psu.as_json] }
   end
 
 end
