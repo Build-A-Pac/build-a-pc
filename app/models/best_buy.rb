@@ -78,7 +78,7 @@ class BestBuy
 
 
   def pick_motherboard(max_price, socket)
-    weight = 16
+    weight = 14
     motherbaord_price = (weight.to_f/100) * max_price.to_i
     @motherboards = Part.where(category: 'abcat0507008').select { |mobo| mobo[:cost] <= motherbaord_price }.sort_by { |price| price[:cost] }
     if @motherboards.empty?
@@ -117,7 +117,7 @@ class BestBuy
   end
 
   def pick_gpu(max_price)
-    weight = 34
+    weight = 37
     gpu_price = (weight.to_f/100) * max_price.to_i
     @gpus = Part.where(category: 'abcat0507002').select { |gpu| gpu[:cost] <= gpu_price }.sort_by {|price| price[:cost] }
     if @gpus.empty?
