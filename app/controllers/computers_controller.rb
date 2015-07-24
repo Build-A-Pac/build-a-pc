@@ -17,12 +17,14 @@ class ComputersController < ApplicationController
     end
 
     @computer.parts = @part_maodels
-    render json: { computer: @computer.as_json, parts: @computer.parts.as_json }
+    render json: { computer: @computer.as_json,
+      parts: @computer.parts.as_json }, status: :created
   end
 
   def show
     @computer = Computer.find(params[:id])
-    render json: { computer: @computer.as_json, parts: @computer.parts.as_json }
+    render json: { computer: @computer.as_json,
+      parts: @computer.parts.as_json }, status: :ok
   end
 
   def build_computer
